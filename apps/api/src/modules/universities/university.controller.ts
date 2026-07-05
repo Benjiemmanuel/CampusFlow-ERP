@@ -7,10 +7,14 @@ import catchAsync from "../../shared/utils/catchAsync";
 import sendResponse from "../../shared/responses/sendResponse";
 
 class UniversityController {
+  /**
+   * Create University
+   */
   create = catchAsync(async (req: Request, res: Response) => {
     const data = createUniversitySchema.parse(req.body);
 
-    const university = await universityService.createUniversity(data);
+    const university =
+      await universityService.createUniversity(data);
 
     sendResponse(res, {
       statusCode: 201,
@@ -20,8 +24,12 @@ class UniversityController {
     });
   });
 
+  /**
+   * Get All Universities
+   */
   getAll = catchAsync(async (req: Request, res: Response) => {
-    const universities = await universityService.getUniversities();
+    const universities =
+      await universityService.getUniversities();
 
     sendResponse(res, {
       statusCode: 200,
@@ -30,10 +38,14 @@ class UniversityController {
     });
   });
 
+  /**
+   * Get University By ID
+   */
   getById = catchAsync(async (req: Request, res: Response) => {
-    const university = await universityService.getUniversity(
-      req.params.id as string
-    );
+    const id = String(req.params.id);
+
+    const university =
+      await universityService.getUniversity(id);
 
     sendResponse(res, {
       statusCode: 200,

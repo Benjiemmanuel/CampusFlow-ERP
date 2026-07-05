@@ -1,3 +1,5 @@
+import { Types } from "mongoose";
+
 import { Gender } from "../../shared/enums/gender.enum";
 import { UserRole } from "../../shared/enums/role.enum";
 import { UserStatus } from "../../shared/enums/user-status.enum";
@@ -21,7 +23,7 @@ export interface IUser {
 
   status: UserStatus;
 
-  universityId: string;
+  universityId: Types.ObjectId;
 
   isEmailVerified: boolean;
 

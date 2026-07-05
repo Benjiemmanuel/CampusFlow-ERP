@@ -1,37 +1,45 @@
+import University from "./university.model";
 import { IUniversity } from "./university.interface";
-import { University } from "./university.model";
 
 class UniversityRepository {
   async create(data: Partial<IUniversity>) {
-    return await University.create(data);
-  }
-
-  async findById(id: string) {
-    return await University.findById(id);
-  }
-
-  async findByEmail(email: string) {
-    return await University.findOne({ email });
-  }
-
-  async findByCode(code: string) {
-    return await University.findOne({ code });
+    return University.create(data);
   }
 
   async findAll() {
-    return await University.find().sort({
-      createdAt: -1,
-    });
+    return University.find({ isDeleted: false });
+  }
+
+  async findById(id: string) {
+    return University.findById(id);
+  }
+
+  async findByEmail(email: string) {
+    return University.findOne({ email });
+  }
+
+  async findByCode(code: string) {
+    return University.findOne({ code });
   }
 
   async update(id: string, data: Partial<IUniversity>) {
-    return await University.findByIdAndUpdate(id, data, {
+    return University.findByIdAndUpdate(id, data, {
       new: true,
+      runValidators: true,
     });
   }
 
   async delete(id: string) {
-    return await University.findByIdAndDelete(id);
+    return University.findByIdAndUpdate(
+      id,
+      {
+        isDeleted: true,
+        deletedAt: new Date(),
+      },
+      {
+        new: true,
+      }
+    );
   }
 }
 

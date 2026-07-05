@@ -1,9 +1,18 @@
-import mongoose, { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
+
 import { IUniversity } from "./university.interface";
+
+import { GradingSystem } from "../../shared/enums/grading-system.enum";
+import { Semester } from "../../shared/enums/semester.enum";
+import { SubscriptionPlan } from "../../shared/enums/subscription-plan.enum";
+import { UniversityStatus } from "../../shared/enums/university-status.enum";
 
 const universitySchema = new Schema<IUniversity>(
   {
+    // ==========================
     // Basic Information
+    // ==========================
+
     name: {
       type: String,
       required: true,
@@ -24,7 +33,18 @@ const universitySchema = new Schema<IUniversity>(
       trim: true,
     },
 
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+
+    // ==========================
     // Contact
+    // ==========================
+
     email: {
       type: String,
       required: true,
@@ -38,9 +58,14 @@ const universitySchema = new Schema<IUniversity>(
       required: true,
     },
 
-    website: String,
+    website: {
+      type: String,
+    },
 
+    // ==========================
     // Address
+    // ==========================
+
     country: {
       type: String,
       required: true,
@@ -61,8 +86,17 @@ const universitySchema = new Schema<IUniversity>(
       required: true,
     },
 
+    // ==========================
     // Branding
-    logo: String,
+    // ==========================
+
+    logo: {
+      type: String,
+    },
+
+    favicon: {
+      type: String,
+    },
 
     primaryColor: {
       type: String,
@@ -74,32 +108,72 @@ const universitySchema = new Schema<IUniversity>(
       default: "#0F172A",
     },
 
-    favicon: String,
-
+    // ==========================
     // Academic
+    // ==========================
+
     gradingSystem: {
       type: String,
-      default: "5-POINT",
+      enum: Object.values(GradingSystem),
+      default: GradingSystem.FIVE_POINT,
     },
 
-    currentSession: String,
+    currentSession: {
+      type: String,
+    },
 
-    currentSemester: String,
+    currentSemester: {
+      type: String,
+      enum: Object.values(Semester),
+    },
 
+    // ==========================
     // Subscription
+    // ==========================
+
     subscriptionPlan: {
       type: String,
-      default: "FREE_TRIAL",
+      enum: Object.values(SubscriptionPlan),
+      default: SubscriptionPlan.FREE_TRIAL,
     },
 
-    subscriptionStartDate: Date,
+    subscriptionStartDate: {
+      type: Date,
+    },
 
-    subscriptionEndDate: Date,
+    subscriptionEndDate: {
+      type: Date,
+    },
 
+    // ==========================
     // Status
-    isActive: {
+    // ==========================
+
+    status: {
+      type: String,
+      enum: Object.values(UniversityStatus),
+      default: UniversityStatus.ACTIVE,
+    },
+
+    // ==========================
+    // Audit
+    // ==========================
+
+    createdBy: {
+      type: String,
+    },
+
+    updatedBy: {
+      type: String,
+    },
+
+    isDeleted: {
       type: Boolean,
-      default: true,
+      default: false,
+    },
+
+    deletedAt: {
+      type: Date,
     },
   },
   {
@@ -107,7 +181,9 @@ const universitySchema = new Schema<IUniversity>(
   }
 );
 
-export const University = model<IUniversity>(
+const University = model<IUniversity>(
   "University",
   universitySchema
 );
+
+export default University;
