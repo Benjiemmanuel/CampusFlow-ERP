@@ -4,17 +4,28 @@ import helmet from "helmet";
 import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
+import universityRoutes from "./modules/universities/university.routes";
+
 const app = express();
 
-// Middleware
+/**
+ * Global Middleware
+ */
 app.use(cors());
+
 app.use(helmet());
+
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
+
 app.use(cookieParser());
+
 app.use(morgan("dev"));
 
-// Health Check Route
+/**
+ * Health Check
+ */
 app.get("/api/v1/health", (req, res) => {
   res.status(200).json({
     success: true,
@@ -22,5 +33,10 @@ app.get("/api/v1/health", (req, res) => {
     version: "1.0.0",
   });
 });
+
+/**
+ * API Routes
+ */
+app.use("/api/v1/universities", universityRoutes);
 
 export default app;
