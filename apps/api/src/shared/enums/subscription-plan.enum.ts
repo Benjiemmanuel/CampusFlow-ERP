@@ -1,0 +1,9 @@
+export enum SubscriptionPlan {
+  FREE_TRIAL = "FREE_TRIAL",
+
+  BASIC = "BASIC",
+
+  PROFESSIONAL = "PROFESSIONAL",
+
+  ENTERPRISE = "ENTERPRISE",
+}

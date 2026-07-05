@@ -1,10 +1,16 @@
+import { GradingSystem } from "../../shared/enums/grading-system.enum";
+import { Semester } from "../../shared/enums/semester.enum";
+import { SubscriptionPlan } from "../../shared/enums/subscription-plan.enum";
+import { UniversityStatus } from "../../shared/enums/university-status.enum";
+
 export interface IUniversity {
-  // Basic Information
+  // Basic
   name: string;
   shortName: string;
   code: string;
+  slug: string;
 
-  // Contact Information
+  // Contact
   email: string;
   phone: string;
   website?: string;
@@ -17,22 +23,30 @@ export interface IUniversity {
 
   // Branding
   logo?: string;
-  primaryColor?: string;
-  secondaryColor?: string;
   favicon?: string;
 
-  // Academic Configuration
-  gradingSystem: string;
+  primaryColor: string;
+  secondaryColor: string;
+
+  // Academic
+  gradingSystem: GradingSystem;
   currentSession?: string;
-  currentSemester?: string;
+  currentSemester?: Semester;
 
   // Subscription
-  subscriptionPlan: string;
+  subscriptionPlan: SubscriptionPlan;
   subscriptionStartDate?: Date;
   subscriptionEndDate?: Date;
 
   // Status
-  isActive: boolean;
+  status: UniversityStatus;
+
+  // Audit
+  createdBy?: string;
+  updatedBy?: string;
+
+  isDeleted: boolean;
+  deletedAt?: Date;
 
   createdAt?: Date;
   updatedAt?: Date;
