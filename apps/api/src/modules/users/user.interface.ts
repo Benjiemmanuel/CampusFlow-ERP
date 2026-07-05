@@ -23,19 +23,7 @@ export interface IUser {
 
   universityId: string;
 
-  employeeId?: string;
-
-  matricNumber?: string;
-
-  profileImage?: string;
-
   isEmailVerified: boolean;
 
-  isPhoneVerified: boolean;
-
   lastLogin?: Date;
-
-  createdAt?: Date;
-
-  updatedAt?: Date;
 }
