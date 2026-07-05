@@ -5,6 +5,7 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 
 import universityRoutes from "./modules/universities/university.routes";
+import errorHandler from "./middleware/error.middleware";
 
 const app = express();
 
@@ -38,5 +39,11 @@ app.get("/api/v1/health", (req, res) => {
  * API Routes
  */
 app.use("/api/v1/universities", universityRoutes);
+
+/**
+ * Global Error Handler
+ * (Must always be the last middleware)
+ */
+app.use(errorHandler);
 
 export default app;
